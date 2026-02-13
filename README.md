@@ -23,6 +23,136 @@ Mata Kuliah **Semantik Web (CPMK 4)**
 Aplikasi ini tidak menggunakan database konvensional (SQL/NoSQL), melainkan mengambil data secara **real-time** melalui **SPARQL Endpoint** DBpedia. Dengan pendekatan ini, data musisi diperoleh langsung dari knowledge graph Wikipedia yang telah terstruktur dalam format RDF.
 
 ---
+## 📄  1. Bagian Penting HTML
+**🔎 Input dan Tombol Pencarian**
+<input type="text" id="searchInput" />
+<button id="search-btn">SEARCH</button>
+
+Bagian ini digunakan sebagai tempat pengguna memasukkan nama musisi atau band.
+Atribut id digunakan oleh JavaScript untuk membaca nilai input dan menjalankan fungsi pencarian ketika tombol diklik atau ketika pengguna menekan tombol Enter.
+**⏳ Skeleton Loading**
+<div id="skeleton" class="neo-card result-container"></div>
+
+
+Elemen ini berfungsi sebagai indikator loading saat data sedang diambil dari DBpedia.
+Skeleton ditampilkan sementara agar pengguna mengetahui bahwa sistem sedang memproses data.
+
+**📊 Area Hasil**
+<main id="resultArea" class="neo-card result-container">
+
+
+Bagian ini menampilkan hasil pencarian seperti:
+
+Nama musisi/band
+
+Genre
+
+Gambar
+
+Deskripsi
+
+Kota asal
+
+Data pada bagian ini diisi secara dinamis menggunakan JavaScript (DOM Manipulation).
+
+
+## 🎨 2. Bagian Penting CSS
+
+**🧩 Kartu Utama (neo-card)**
+
+.neo-card {
+  background: var(--glass-bg);
+  padding: 28px;
+  border-radius: 18px;
+}
+
+
+Class ini digunakan untuk desain utama hasil pencarian, skeleton loading, dan error message agar tampilan konsisten dan modern.
+
+**📐 Layout Grid Hasil**
+
+.result-container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+}
+
+
+CSS Grid membagi tampilan menjadi dua bagian:
+
+Area gambar (260px)
+
+Area informasi (1fr / sisa ruang)
+
+Layout ini membuat tampilan lebih rapi dan terstruktur.
+
+**✨ Animasi Skeleton (Shimmer Effect)**
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+
+Animasi ini memberikan efek loading bergerak pada skeleton sehingga pengguna mengetahui bahwa data sedang diproses.
+
+---
+
+## ⚙️ 3. Bagian Penting JavaScript
+🚀 Event Listener Awal
+window.addEventListener("DOMContentLoaded", () => {
+  searchBtn.addEventListener("click", fetchData);
+});
+
+
+Kode ini memastikan bahwa JavaScript berjalan setelah halaman selesai dimuat, serta menghubungkan tombol SEARCH dengan fungsi fetchData().
+
+## 🛡 Validasi dan Format Input
+if (!inputRaw) return;
+
+let formattedInput = inputRaw
+  .split(" ")
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  .join("_");
+
+
+Bagian ini digunakan untuk:
+
+Mencegah input kosong
+
+Mengubah format nama agar sesuai dengan struktur resource DBpedia
+
+Mengganti spasi menjadi underscore (_)
+
+Contoh:
+ariana grande → Ariana_Grande
+
+## 🧠 Filter SPARQL (Semantic Web)
+FILTER (?type IN (dbo:Band, dbo:MusicalArtist))
+
+
+Filter ini memastikan bahwa data yang ditampilkan hanya bertipe:
+
+dbo:Band
+
+dbo:MusicalArtist
+
+Sehingga sistem tidak menampilkan entitas lain seperti album atau lagu.
+
+## 🌐 Pengambilan Data dari DBpedia
+const response = await fetch(url);
+const data = await response.json();
+
+
+Kode ini mengambil data dari SPARQL Endpoint DBpedia menggunakan metode fetch() dan mengubah respons menjadi format JSON agar dapat diproses oleh JavaScript.
+
+🖥 Menampilkan Hasil ke Halaman
+document.getElementById("resName").innerText = item.label.value;
+
+
+Bagian ini melakukan manipulasi DOM dengan mengisi elemen HTML berdasarkan ID yang telah disediakan sebelumnya.
+
+---
+
 
 ## 🎯 Tujuan Proyek
 
