@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Musician Semantic Search</title>
+    <link href="style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" src="index.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🎸 M-SEARCH -></h1>
+        <p class="subtitle">Semantic Web Musician Database by (DBpedia)</p>
+      </header>
+
+      <div class="search-section">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari Band/Musisi (Contoh: Queen, Coldplay, Nidji)..."
+        />
+        <button id="search-btn">SEARCH</button>
+      </div>
+
+      <div id="errorArea" class="neo-card error"></div>
+
+      <div id="skeleton" class="neo-card result-container">
+        <div class="image-wrapper shimmer-effect"></div>
+        <div class="info-content">
+          <div class="skeleton-line title shimmer-effect"></div>
+          <div class="badge-row">
+            <div class="skeleton-badge shimmer-effect"></div>
+            <div class="skeleton-badge shimmer-effect"></div>
+          </div>
+          <div class="skeleton-box shimmer-effect"></div>
+          <div class="skeleton-line btn shimmer-effect"></div>
+        </div>
+      </div>
+
+      <main id="resultArea" class="neo-card result-container">
+        <div class="image-wrapper" id="imgWrapper">
+          <img id="resImg" src="" alt="Musician Photo" />
+        </div>
+        <div class="info-content">
+          <h2 id="resName"></h2>
+          <div class="badge-row">
+            <span id="resGenre" class="badge"></span>
+            <span id="resActiveYear" class="badge secondary"></span>
+          </div>
+          <div class="detail-box">
+            <p><strong>Hometown:</strong> <span id="resHometown"></span></p>
+            <p id="resAbstract"></p>
+          </div>
+          <a id="resLink" target="_blank" class="neo-btn-link"
+            >OPEN DBPEDIA SOURCE</a
+          >
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
